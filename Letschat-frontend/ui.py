@@ -3,7 +3,7 @@ from components.login_form import login
 from components.chat_box import chat_interface
 from utils.session import init_session, is_logged_in
 
-st.set_page_config(page_title="Langgraph Agent", layout="centered", page_icon="🤖")
+st.set_page_config(page_title="Langgraph Agent", layout="centered")
 
 init_session()
 

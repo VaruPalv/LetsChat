@@ -2,17 +2,12 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 router = APIRouter()
-
-# Define the payload model for login
 class LoginPayload(BaseModel):
     username: str
     password: str
-
-# Simulate a user database
 users_db = {
-    "varshini": "varshini@11",  # username: password
+    "varshini": "varshini@11",
 }
-
 @router.post("/validate_login")
 def validate_login(payload: LoginPayload):
     if users_db.get(payload.username) == payload.password:
