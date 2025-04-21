@@ -1,14 +1,31 @@
 import requests
-from utils.config import LOGIN_API_URL, CHAT_API_URL
+from utils.config import LOGIN_API_URL, CHAT_API_URL, SIGNUP_API_URL
 
 def validate_login(username, password):
+    username = username.strip().lower()
+    
     payload = {"username": username, "password": password}
     try:
-        response = requests.post(LOGIN_API_URL, json=payload)
+        response = requests.post(LOGIN_API_URL, json=payload) 
         if response.status_code == 200:
             return True, "Login successful!"
         else:
             return False, "Invalid credentials, please try again."
+    except requests.exceptions.RequestException as e:
+        return False, f"An error occurred: {e}"
+
+def register_user(username, password):
+    username = username.strip().lower()
+    
+    payload = {"username": username, "password": password}
+    try:
+        response = requests.post(SIGNUP_API_URL, json=payload)
+        if response.status_code == 200:
+            return True, "Signup successful!"
+        elif response.status_code == 400:
+            return False, response.json().get("detail", "Signup failed.")
+        else:
+            return False, "Signup failed. Please try again."
     except requests.exceptions.RequestException as e:
         return False, f"An error occurred: {e}"
 
